@@ -1,0 +1,16 @@
+module.exports = {    
+    USERS: "/users",
+    USER: "/users/:id",
+    MOVIES: "/movies",
+    MOVIE: "/movies/:id",
+    CART: "/cart",
+    CART_ITEMS: "/cart/:id/items",
+    CART_ITEM: "/cart/:id_cart/items/:id",
+    SEATS: "/movies/:id_movie/seats",
+    SEAT: "/movies/:id_movie/seats/:id",
+    CHECKOUT: "/checkout",
+    RESERVATIONS: "/reservations",
+    RESERVATION: "/reservations/:id",
+    ALIVE: "/alive",
+    ROOT: "/",
+}
