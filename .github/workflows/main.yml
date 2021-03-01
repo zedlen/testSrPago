@@ -19,6 +19,13 @@ jobs:
     steps:      
       - uses: actions/checkout@master
 
+      - name: Configure AWS credentials from Test account
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}          
+        aws-region: us-east-1
+
       - name: Upload CloudFormation        
         run: |
           aws s3 sync --region us-east-1 ./cloudformation_templetes/ s3://${{ secrets.AWS_BUCKET }}
@@ -68,8 +75,6 @@ jobs:
         with:
           name: SrPagoStack
           region: us-east-1
-          access-key-id: ${{ secrets.AWS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           template: cloudformation_templetes/master.yaml
           parameter-overrides: "UsersImage=${{ steps.users-ecr.outputs.imageUrl }},MoviesImage=${{ steps.movies-ecr.outputs.imageUrl }},SalesImage=${{ steps.sales-ecr.outputs.imageUrl }},BucketName=${{ secrets.AWS_BUCKET }}"
 
