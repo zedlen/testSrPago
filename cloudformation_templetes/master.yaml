@@ -26,6 +26,8 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub 'https://s3.amazonaws.com/${BucketName}/infrastructure/cognito-pool.yaml'
+      Parameters:
+        AuthName:  TestSrPago
 
   VPC:
     Type: AWS::CloudFormation::Stack
