@@ -24,8 +24,8 @@ jobs:
           aws s3 sync --region us-east-1 ./cloudformation_templetes/ s3://${{ secrets.AWS_BUCKET }}
         id: upload-s3
         env:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}          
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}          
       
       - name: Set UUID
         id: generate-uuid
