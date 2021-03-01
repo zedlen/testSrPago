@@ -14,13 +14,68 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  upload_templetes:
+  build_and_upload:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: shallwefootball/s3-upload-action@master
+
+      - name: Set UUID
+        id: generate-uuid
+        uses: filipstefansson/uuid-action@v1
+        with:
+          name: ${{ gihub.sha }}
+        
+      - name: Upload CloudFormation
+        id: upload-s3
         with:
           aws_key_id: ${{ secrets.AWS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
           source_dir: '/cloudformation_templetes'
+      
+      - name: Set UUID
+        id: generate-uuid
+        uses: filipstefansson/uuid-action@v1
+        with:
+          name: ${{ gihub.sha }}
+      
+      - run: docker build  --tag users:${{ steps.generate-uuid.outputs.uuid }} ./usersApi
+      - name: Push Users to ECR
+        id: users-ecr
+        uses: jwalton/gh-ecr-push@v1
+        with:
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          image: users:${{ steps.generate-uuid.outputs.uuid }}  
+
+      - run: docker build  --tag movies:${{ steps.generate-uuid.outputs.uuid }} ./moviesApi
+      - name: Push Users to ECR
+        id: movies-ecr
+        uses: jwalton/gh-ecr-push@v1
+        with:
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          image: movies:${{ steps.generate-uuid.outputs.uuid }}  
+
+      - run: docker build  --tag sales:${{ steps.generate-uuid.outputs.uuid }} ./salesApi
+      - name: Push Sales to ECR
+        id: movies-ecr
+        uses: jwalton/gh-ecr-push@v1
+        with:
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          image: sales:${{ steps.generate-uuid.outputs.uuid }}     
+
+      - name: Deploy to AWS CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: SrPagoStack
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          template: /cloudformation_templetes/master.yaml
+          parameter-overrides: "UsersImage=${{ steps.users-ecr.outputs.imageUrl }},MoviesImage=${{ steps.movies-ecr.outputs.imageUrl }},SalesImage=${{ steps.sales-ecr.outputs.imageUrl }},BucketName=${{ secrets.AWS_BUCKET }}"
+
