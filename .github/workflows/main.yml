@@ -16,10 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   build_and_upload:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: shallwefootball/s3-upload-action@master
-
+    steps:      
       - name: Set UUID
         id: generate-uuid
         uses: filipstefansson/uuid-action@v1
@@ -27,6 +24,8 @@ jobs:
           name: ${{ gihub.sha }}
         
       - name: Upload CloudFormation
+        uses: actions/checkout@master
+        uses: shallwefootball/s3-upload-action@master
         id: upload-s3
         with:
           aws_key_id: ${{ secrets.AWS_KEY_ID }}
