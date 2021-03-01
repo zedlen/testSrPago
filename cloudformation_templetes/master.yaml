@@ -20,10 +20,12 @@ Parameters:
   BucketName:
     Type: String
 Resources:
+
+
   CognitoPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      TempleteURL: !Sub 'https://s3.amazonaws.com/${BucketName}/infrastructure/cognito-pool.yaml'
+      TemplateURL: !Sub 'https://s3.amazonaws.com/${BucketName}/infrastructure/cognito-pool.yaml'
 
   VPC:
     Type: AWS::CloudFormation::Stack
