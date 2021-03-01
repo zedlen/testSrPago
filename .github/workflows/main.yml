@@ -26,7 +26,7 @@ jobs:
           aws_key_id: ${{ secrets.AWS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
-          source_dir: '/cloudformation_templetes'
+          source_dir: './cloudformation_templetes'
       
       - name: Set UUID
         id: generate-uuid
@@ -70,6 +70,6 @@ jobs:
           name: SrPagoStack
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          template: /cloudformation_templetes/master.yaml
+          template: ./cloudformation_templetes/master.yaml
           parameter-overrides: "UsersImage=${{ steps.users-ecr.outputs.imageUrl }},MoviesImage=${{ steps.movies-ecr.outputs.imageUrl }},SalesImage=${{ steps.sales-ecr.outputs.imageUrl }},BucketName=${{ secrets.AWS_BUCKET }}"
 
