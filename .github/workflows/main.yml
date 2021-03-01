@@ -56,7 +56,7 @@ jobs:
 
       - run: docker build  --tag sales:${{ steps.generate-uuid.outputs.uuid }} ./salesApi
       - name: Push Sales to ECR
-        id: movies-ecr
+        id: sales-ecr
         uses: jwalton/gh-ecr-push@v1
         with:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
