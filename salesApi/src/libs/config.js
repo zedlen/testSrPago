@@ -18,5 +18,5 @@ module.exports = {
   pool_id: process.env.POOL_ID,
   app_client_id: process.env.APP_CLIENT_ID,
   region: process.env.REGION,
-  users_url: process.env.USERS_URL,
+  users_url: process.env.USERS_URL || 'http://127.0.0.1:3001/users/api/v1',
 };

@@ -7,7 +7,7 @@ import jwkToPem from 'jwk-to-pem'
 module.exports = app => {
 
   // Settings
-  app.set('port', process.env.PORT || 3001);
+  app.set('port', process.env.PORT || 3002);
   app.set('json spaces', 4);
 
   // middlewares

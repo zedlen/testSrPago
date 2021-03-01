@@ -3,14 +3,14 @@ module.exports = app => {
   const Router = app.routing
   const ROUTES = app.const.routes
   const Movie = app.db.models.Movie;  
-  Router.route(ROUTES.MOVIES).get(async (req, res) => {    
+  Router.route(ROUTES.MOVIES.split('?')[0]).get(async (req, res) => {    
     Movie.findAll({
       where: {
         location: req.query?.location
       }
     })
-    .then(result => {        
-      res.json(HAL.MoviesHal(result, req.query?.location))
+    .then(result => {             
+      res.json(HAL.MoviesHAL(result, req.query?.location))
     })
     .catch(error => {
       res.status(500).json({error: error.message});
@@ -25,7 +25,7 @@ module.exports = app => {
       }
     })
     .then(result => {        
-      res.json(HAL.MoviesHal(result))
+      res.json(HAL.MovieHAL(result))
     })
     .catch(error => {
       res.status(500).json({error: error.message});
@@ -52,7 +52,7 @@ module.exports = app => {
       }
     })
     .then(result => {        
-      res.json(HAL.MoviesHal(result))
+      res.json(HAL.SeatsHAL(result))
     })
     .catch(error => {
       res.status(500).json({error: error.message});
@@ -68,7 +68,7 @@ module.exports = app => {
       }
     })
     .then(result => {        
-      res.json(HAL.MoviesHal(result))
+      res.json(HAL.SeatHAL(result))
     })
     .catch(error => {
       res.status(500).json({error: error.message});

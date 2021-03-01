@@ -28,9 +28,9 @@ module.exports = (sequelize, DataType) => {
       }
     }, 
     status: {
-        type: Sequelize.ENUM,
+        type: DataType.ENUM,
         values: ['free', 'reserved', 'confirmed', 'blocked', 'disabled', 'no_seat'],
-        defaultValue: "free",
+        defaultValue: 'free',
         allowNull: false,
         validate: {
           notEmpty: true
@@ -43,6 +43,6 @@ module.exports = (sequelize, DataType) => {
     Seat.belongsTo(models.Movie)
   };
 
-  return User;
+  return Seat;
 
 };

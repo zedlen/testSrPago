@@ -18,5 +18,5 @@ module.exports = {
   pool_id: process.env.POOL_ID || 'us-east-2_kLGSnsIEo',
   app_client_id: process.env.APP_CLIENT_ID || '621an22fga1j936gtddkghe5re',
   region: process.env.REGION || 'us-east-2',
-  users_url: process.env.USERS_URL
+  users_url: process.env.USERS_URL || 'http://127.0.0.1:3001/users/api/v1',
 };

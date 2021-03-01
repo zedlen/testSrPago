@@ -40,9 +40,9 @@ module.exports = (sequelize, DataType) => {
     });
   
     Movie.associate = (models) => { 
-      Movie.hasMany(models.Seats)     
+      Movie.hasMany(models.Seat)     
     };
   
-    return Module;
+    return Movie;
   
 };

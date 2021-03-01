@@ -9,7 +9,7 @@ import * as AWSCognito from 'amazon-cognito-identity-js';
 module.exports = app => {
 
   // Settings
-  app.set('port', process.env.PORT || 3001);
+  app.set('port', process.env.PORT || 3003);
   app.set('json spaces', 4);
 
   // middlewares

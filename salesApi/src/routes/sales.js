@@ -1,7 +1,8 @@
 module.exports = app => {
     const Router = app.routing
     const HAL = app.libs.hal        
-
+    const ROUTES = app.const.routes
+    
     Router.route(ROUTES.CART).post(async (req, res) => {    
         res.status(501).json({error: "Not Implrmrntrd"});
     });
