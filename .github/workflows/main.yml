@@ -17,14 +17,9 @@ jobs:
   build_and_upload:
     runs-on: ubuntu-latest
     steps:      
-      - name: Set UUID
-        id: generate-uuid
-        uses: filipstefansson/uuid-action@v1
-        with:
-          name: ${{ github.sha }}
-        
-      - name: Upload CloudFormation
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
+
+      - name: Upload CloudFormation        
         uses: shallwefootball/s3-upload-action@master
         id: upload-s3
         with:
@@ -37,7 +32,7 @@ jobs:
         id: generate-uuid
         uses: filipstefansson/uuid-action@v1
         with:
-          name: ${{ gihub.sha }}
+          name: ${{ github.sha }}
       
       - run: docker build  --tag users:${{ steps.generate-uuid.outputs.uuid }} ./usersApi
       - name: Push Users to ECR
