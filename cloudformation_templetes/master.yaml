@@ -82,8 +82,8 @@ Resources:
         Name: Movies
         Memory: 512
         Cpu: 256
-        PoolId: !GetAtt CognitoPool.IdentityPoolId
-        AppClientId: !GetAtt CognitoPool.UserPoolClientId
+        PoolId: !Ref CognitoPool.IdentityPoolId
+        AppClientId: !Ref CognitoPool.UserPoolClientId
 
   MoviesService:
     Type: AWS::CloudFormation::Stack
@@ -100,8 +100,8 @@ Resources:
         Name: Movie
         Memory: 512
         Cpu: 256
-        PoolId: !GetAtt CognitoPool.IdentityPoolId
-        AppClientId: !GetAtt CognitoPool.UserPoolClientId
+        PoolId: !Ref CognitoPool.IdentityPoolId
+        AppClientId: !Ref CognitoPool.UserPoolClientId
   
   SalesService:
     Type: AWS::CloudFormation::Stack
@@ -118,8 +118,8 @@ Resources:
         Name: Sales
         Memory: 512
         Cpu: 256
-        PoolId: !GetAtt CognitoPool.IdentityPoolId
-        AppClientId: !GetAtt CognitoPool.UserPoolClientId
+        PoolId: !Ref CognitoPool.IdentityPoolId
+        AppClientId: !Ref CognitoPool.UserPoolClientId
 
 
   

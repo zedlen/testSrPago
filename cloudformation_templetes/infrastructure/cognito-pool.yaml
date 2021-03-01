@@ -36,8 +36,8 @@ Resources:
     Properties:
       UserPoolName: !Sub ${AuthName}-user-pool
       AutoVerifiedAttributes:
-        - phone_number
-      MfaConfiguration: "ON"
+        - email
+      MfaConfiguration: "OFF"
       SmsConfiguration:
         ExternalId: !Sub ${AuthName}-external
         SnsCallerArn: !GetAtt SNSRole.Arn
@@ -49,14 +49,7 @@ Resources:
         - Name: email
           AttributeDataType: String
           Mutable: false
-          Required: true
-        - Name: phone_number
-          AttributeDataType: String
-          Mutable: false
-          Required: true
-        - Name: slackId
-          AttributeDataType: String
-          Mutable: true
+          Required: true       
   
   # Creates a User Pool Client to be used by the identity pool
   UserPoolClient:
