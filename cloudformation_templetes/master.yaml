@@ -23,7 +23,7 @@ Resources:
 
 
   CognitoPool:
-    Type: AWS::Cognito::UserPool
+    Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub 'https://s3.amazonaws.com/${BucketName}/infrastructure/cognito-pool.yaml'
 
