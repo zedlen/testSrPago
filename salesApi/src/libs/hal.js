@@ -17,10 +17,6 @@ module.exports = app => {
           .addLink("cart", ROUTES.CART)
     }
     return {
-        UserHAL,
-        UsersHAL,
-        LoginHAL,
-        SignUpHAL,
         MainHAL,
     }
 }

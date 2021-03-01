@@ -71,10 +71,10 @@ module.exports = app => {
     }
     try {
       if (isFacebookAuth) {
-        
+        // TODO: Implement Social Login
       } else {
         if (isGoogleAuth) {
-          
+          // TODO: Implement Social Login
         } else {
           const loginResponse = (err, cognitoUser) =>{
             if (err) {          
