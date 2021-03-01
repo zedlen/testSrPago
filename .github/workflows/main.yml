@@ -38,17 +38,17 @@ jobs:
         id: users-ecr
         uses: jwalton/gh-ecr-push@v1
         with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          access-key-id: ${{ secrets.AWS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
           image: users:${{ steps.generate-uuid.outputs.uuid }}  
 
       - run: docker build  --tag movies:${{ steps.generate-uuid.outputs.uuid }} ./moviesApi
-      - name: Push Users to ECR
+      - name: Push Movies to ECR
         id: movies-ecr
         uses: jwalton/gh-ecr-push@v1
         with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          access-key-id: ${{ secrets.AWS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
           image: movies:${{ steps.generate-uuid.outputs.uuid }}  
@@ -58,7 +58,7 @@ jobs:
         id: sales-ecr
         uses: jwalton/gh-ecr-push@v1
         with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          access-key-id: ${{ secrets.AWS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
           image: sales:${{ steps.generate-uuid.outputs.uuid }}     
@@ -67,7 +67,7 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: SrPagoStack
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          access-key-id: ${{ secrets.AWS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           template: cloudformation_templetes/master.yaml
           parameter-overrides: "UsersImage=${{ steps.users-ecr.outputs.imageUrl }},MoviesImage=${{ steps.movies-ecr.outputs.imageUrl }},SalesImage=${{ steps.sales-ecr.outputs.imageUrl }},BucketName=${{ secrets.AWS_BUCKET }}"
