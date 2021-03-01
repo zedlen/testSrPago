@@ -67,6 +67,7 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: SrPagoStack
+          region: us-east-1
           access-key-id: ${{ secrets.AWS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           template: cloudformation_templetes/master.yaml
