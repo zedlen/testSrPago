@@ -96,7 +96,7 @@ Resources:
         Listener: !GetAtt ALB.Outputs.Listener
         Path: /movies
         Image: !Ref MoviesImage
-        Port: 3001
+        Port: 3002
         Name: Movie
         Memory: 512
         Cpu: 256
@@ -114,7 +114,7 @@ Resources:
         Listener: !GetAtt ALB.Outputs.Listener
         Path: /sales
         Image: !Ref SalesImage
-        Port: 3001
+        Port: 3003
         Name: Sales
         Memory: 512
         Cpu: 256
