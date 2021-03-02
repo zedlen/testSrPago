@@ -21,7 +21,7 @@ jobs:
 
       - name: Test Cloudformation templetes
         run: |
-          ./tests/valdidate-templates.sh
+          ./tests/validate-templates.sh
         id: test-templetes
 
       - name: Configure AWS credentials from Test account
