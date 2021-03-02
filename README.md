@@ -61,3 +61,29 @@ The application by the date this instructions were written is not yet complete, 
 - [ ] Create a local proxy, so all services could be used as one
 
 - [ ] Create Api Gateway template to deploy to cloud formation
+
+- [ ] Capability to create admin users
+
+
+## Hot to use it?
+
+If it is the first time you use the api you have to create a use with the endpoint ```POST /users/api/v1/users``` , qhen you create a user, an email is sended to verification, with the code, you hace to confirm your user with ```POST /users/api/v1/confirm````
+
+After that you could login.
+
+The happy should be
+
+List Movies, list seat from movie, create cart, add items to cart, checkout
+
+Whe the application is runned the first time ever, the first user enrolled is added as admin user, wih that user you can create movies and add seats to it.
+
+It al ready has a Movie registered and a user
+
+The user is: jonhdoe
+The password is: user123!@M
+
+This are the base_url you need asn env var for postman ```http://srpagostack-1161434535.us-east-1.elb.amazonaws.com/```
+
+This is the movies_url ```movies/api/v1/```
+This is the sales_url ```sales/api/v1/```
+This is the users_url ```users/api/v1/```
