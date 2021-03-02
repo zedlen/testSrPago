@@ -76,7 +76,7 @@ Resources:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       LoadBalancers:
-        - ContainerName: "product-service"
+        - ContainerName: !Ref Name
           ContainerPort: !Ref Port
           TargetGroupArn: !Ref TargetGroup
 
@@ -116,7 +116,7 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: product-service
+      Family: !Ref Name
       NetworkMode: awsvpc
       ExecutionRoleArn: !Ref TaskExecutionRole
       RequiresCompatibilities:
