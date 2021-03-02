@@ -60,6 +60,23 @@ Parameters:
     Default: 256
 
 Resources:
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${Name}-service'
+      GroupDescription: ECS Security Group
+      VpcId: !Ref VPC
+          
+  SecurityGroupInbound:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref 'SecurityGroup'
+      IpProtocol: tcp
+      FromPort: !Ref 'Port'
+      ToPort: !Ref 'Port'
+      CidrIp: "0.0.0.0/0",
+
   Service:
     Type: AWS::ECS::Service
     DependsOn: ListenerRule
@@ -69,6 +86,18 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups: 
+            - !Ref 'SecurityGroup'
+            - Fn::ImportValue:
+                !Sub "${ClusterName}-ServicesSecurityGroup"
+          Subnets:
+            Fn::Split:
+              - ","
+              - Fn::ImportValue:
+                  !Sub "${ClusterName}-PublicSubnets"
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
