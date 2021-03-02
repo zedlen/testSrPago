@@ -121,6 +121,8 @@ Resources:
       ExecutionRoleArn: !Ref TaskExecutionRole
       RequiresCompatibilities:
         - 'FARGATE'
+      Memory: !Ref Memory
+      Cpu: !Ref Cpu
       ContainerDefinitions:
         - Name: !Ref Name
           Essential: true
