@@ -75,7 +75,7 @@ Resources:
       IpProtocol: tcp
       FromPort: !Ref 'Port'
       ToPort: !Ref 'Port'
-      CidrIp: "0.0.0.0/0",
+      CidrIp: 0.0.0.0/0
 
   Service:
     Type: AWS::ECS::Service
