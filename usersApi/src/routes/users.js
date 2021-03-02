@@ -61,13 +61,13 @@ module.exports = app => {
     const isFacebookAuth = req.body.is_facebook || false
     const isGoogleAuth = req.body.is_google || false
     const userAuthData = {
-      username: req.body.username,
-      email: req.body.email,
+      username: req.body.email,
+      // email: req.body.email,
       password: req.body.password, 
-      birthdate: req.body.birthdate,
-      name: req.body.name,
-      last_name: req.body.last_name,
-      gender: req.body.gender,
+      // birthdate: req.body.birthdate,
+      // name: req.body.name,
+      // last_name: req.body.last_name,
+      // gender: req.body.gender,
     }
     try {
       if (isFacebookAuth) {

@@ -81,5 +81,4 @@ jobs:
           name: SrPagoStack
           capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM
           template: cloudformation_templetes/master.yaml
-          parameter-overrides: "UsersImage=${{ steps.users-ecr.outputs.imageUrl }},MoviesImage=${{ steps.movies-ecr.outputs.imageUrl }},SalesImage=${{ steps.sales-ecr.outputs.imageUrl }},BucketName=${{ secrets.AWS_BUCKET }}"
-
+          parameter-overrides: "UsersImage=510411657948.dkr.ecr.us-east-1.amazonaws.com/users:${{ steps.generate-uuid.outputs.uuid }},MoviesImage=510411657948.dkr.ecr.us-east-1.amazonaws.com/movies:${{ steps.generate-uuid.outputs.uuid }},SalesImage=510411657948.dkr.ecr.us-east-1.amazonaws.com/sales:${{ steps.generate-uuid.outputs.uuid }},BucketName=${{ secrets.AWS_BUCKET }}"

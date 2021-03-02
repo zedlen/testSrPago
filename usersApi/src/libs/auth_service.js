@@ -16,11 +16,11 @@ module.exports = app => {
     const Register= (body, callback) => {
         const name = body.name, username = body.username, email = body.email, password = body.password, last_name = body.last_name, gender = body.gender, birthdate = body.birthdate;
         let attributeList = [];
-        attributeList.push(new CognitoUserAttribute({ Name: "email", Value: email }));
+        /*attributeList.push(new CognitoUserAttribute({ Name: "email", Value: email }));
         attributeList.push(new CognitoUserAttribute({ Name: "name", Value: name }));
         attributeList.push(new CognitoUserAttribute({ Name: "family_name", Value: last_name }));
         attributeList.push(new CognitoUserAttribute({ Name: "gender", Value: gender }));
-        attributeList.push(new CognitoUserAttribute({ Name: "birthdate", Value: birthdate }));        
+        attributeList.push(new CognitoUserAttribute({ Name: "birthdate", Value: birthdate }));        */
         userPool.signUp(username, password, attributeList, null, async (err, result) => {
           if (err)
               return callback(err);
