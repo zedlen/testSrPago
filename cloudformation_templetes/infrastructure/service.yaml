@@ -65,7 +65,7 @@ Resources:
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
         - ContainerName: "product-service"
-          ContainerPort: 8001
+          ContainerPort: !Ref Port
           TargetGroupArn: !Ref TargetGroup
 
   TaskDefinition:
