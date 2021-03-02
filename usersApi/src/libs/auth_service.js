@@ -54,8 +54,7 @@ module.exports = app => {
          }
          const cognitoUser = new CognitoUser(userData);
          cognitoUser.authenticateUser(authenticationDetails, {
-             onSuccess: function (result) {
-                console.log(result)
+             onSuccess: function (result) {                
                 const accesstoken = result.getAccessToken().getJwtToken();
                 callback(null, accesstoken);
              },
