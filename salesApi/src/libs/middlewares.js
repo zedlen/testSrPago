@@ -20,8 +20,8 @@ module.exports = app => {
     next();
   });
   const config = app.libs.config
-  const protectedRoutes = express.Router(); 
-  const User = app.db.models.User;   
+  const protectedRoutes = express.Router();     
+  const ROUTES = app.const.routes  
   protectedRoutes.use((req, res, next) => {
     const poolData = {
       UserPoolId: config.pool_id,
@@ -70,20 +70,24 @@ module.exports = app => {
                                     headers:{
                                         'Authorization': token
                                     }
-                                 }, (error, response, body) => {
+                                 }, (error, response, body) => {                                     
                                      if (error) {
-                                         throw error
+                                        res.status(500);
+                                        return res.send({error: "Error finding user"});
                                      }
-                                     if (response.statusCode != 200) {
-                                        throw response.statusCode
+                                     if (response.statusCode != 200) {                                                                                
+                                        res.status(404);
+                                        return res.send({error: "User not found"});
                                      }
-                                     req.User = body.user
+                                     req.User = body
                                      if (!req.User) {
-                                        throw "User not found"
+                                        res.status(404);
+                                        return res.send({error: "User not found"});
                                     }
                                     return next();                                    
-                                 })        
+                                 })                                                                  
                             } catch (error) {
+                                console.log(error)
                                 res.status(404);
                                 return res.send({error: "User not found"});
                             }                            

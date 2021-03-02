@@ -19,4 +19,5 @@ module.exports = {
   app_client_id: process.env.APP_CLIENT_ID || '151o30k1rb8n3v2v3cl03o6s56',
   region: process.env.REGION || 'us-east-1',
   users_url: process.env.USERS_URL || 'http://127.0.0.1:3001/users/api/v1',
+  movies_url: process.env.MOVIES_URL || 'http://127.0.0.1:3002/movies/api/v1',
 };

@@ -1,5 +1,3 @@
-import halson from 'halson'
-
 module.exports = app => {
     const Router = app.routing
     const HAL = app.libs.hal  
