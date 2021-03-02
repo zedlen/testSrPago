@@ -84,6 +84,7 @@ Resources:
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
         Priority: 10
+        Subnets: !GetAtt VPC.Outputs.PublicSubnets
 
   MoviesService:
     Type: AWS::CloudFormation::Stack
@@ -103,6 +104,7 @@ Resources:
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
         Priority: 20
+        Subnets: !GetAtt VPC.Outputs.PublicSubnets
   
   SalesService:
     Type: AWS::CloudFormation::Stack
@@ -122,6 +124,7 @@ Resources:
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
         Priority: 30
+        Subnets: !GetAtt VPC.Outputs.PublicSubnets
 
 
   

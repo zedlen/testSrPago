@@ -58,6 +58,11 @@ Parameters:
     Description: The Priority for the ALB
     Type: Number
     Default: 256
+  
+  Subnets:
+    Description: The subnets to deploy
+    Type: String
+    Default: private
 
 Resources:
 
@@ -72,6 +77,10 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED          
+        Subnets:
+            Fn::Split:
+              - ","
+              - !Ref Subnets                  
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
