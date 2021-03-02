@@ -84,6 +84,9 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: product-service
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - 'FARGATE'
       ContainerDefinitions:
         - Name: !Ref Name
           Essential: true
