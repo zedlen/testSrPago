@@ -77,7 +77,7 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED          
-        Subnets:
+          Subnets:
             Fn::Split:
               - ","
               - !Ref Subnets                  

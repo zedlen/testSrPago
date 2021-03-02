@@ -19,6 +19,11 @@ jobs:
     steps:      
       - uses: actions/checkout@master
 
+      - name: Test Cloudformation templetes
+        run: |
+          ./tests/valdidate-templetes.sh
+        id: test-templetes
+
       - name: Configure AWS credentials from Test account
         uses: aws-actions/configure-aws-credentials@v1
         with:
