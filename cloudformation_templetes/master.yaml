@@ -75,7 +75,7 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 1
         Listener: !GetAtt ALB.Outputs.Listener
-        Path: /users
+        Path: /users*
         Image: !Ref UsersImage
         Port: 3001
         Name: Users
@@ -96,7 +96,7 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 1
         Listener: !GetAtt ALB.Outputs.Listener
-        Path: /movies
+        Path: /movies*
         Image: !Ref MoviesImage
         Port: 3002
         Name: Movie
@@ -117,7 +117,7 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         DesiredCount: 1
         Listener: !GetAtt ALB.Outputs.Listener
-        Path: /sales
+        Path: /sales*
         Image: !Ref SalesImage
         Port: 3003
         Name: Sales
