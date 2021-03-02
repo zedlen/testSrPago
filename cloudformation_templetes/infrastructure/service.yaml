@@ -178,7 +178,7 @@ Resources:
     Properties:
     Properties:
       HealthCheckIntervalSeconds: 20
-      HealthCheckPath: !Sub '${Path}/alive'
+      HealthCheckPath: !Sub '/alive'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
