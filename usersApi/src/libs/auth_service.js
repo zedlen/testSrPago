@@ -16,19 +16,27 @@ module.exports = app => {
     const Register= (body, callback) => {
         const name = body.name, username = body.username, email = body.email, password = body.password, last_name = body.last_name, gender = body.gender, birthdate = body.birthdate;
         let attributeList = [];
-        /*attributeList.push(new CognitoUserAttribute({ Name: "email", Value: email }));
+        attributeList.push(new CognitoUserAttribute({ Name: "email", Value: email }));
         attributeList.push(new CognitoUserAttribute({ Name: "name", Value: name }));
-        attributeList.push(new CognitoUserAttribute({ Name: "family_name", Value: last_name }));
+        /*attributeList.push(new CognitoUserAttribute({ Name: "family_name", Value: last_name }));
         attributeList.push(new CognitoUserAttribute({ Name: "gender", Value: gender }));
         attributeList.push(new CognitoUserAttribute({ Name: "birthdate", Value: birthdate }));        */
         userPool.signUp(username, password, attributeList, null, async (err, result) => {
           if (err)
               return callback(err);
-          console.log(result)
           // var cognitoUser = result.user;
           body.id=result.userSub
-          body.lastname=body.last_name
-          body.birthdate= new Date(body.birthdate)
+          // body.lastname=body.last_name
+          // body.birthdate= new Date(body.birthdate)
+          const UserTypes = app.db.models.UserType        
+          const us = await User.findAll({})
+          if (us.length === 0) {
+            const uT = UserTypes.findOne({where:{code: app.const.constants.ADMIN_CODE}})
+            body.UserTypeId = uT.id
+          } else {
+            const uT = UserTypes.findOne({where:{code: app.const.constants.ADMIN_CODE}})
+            body.UserTypeId = uT.id
+          }
           const u = await User.create(body)  
           callback(null, u);
         });

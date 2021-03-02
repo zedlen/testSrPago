@@ -3,7 +3,13 @@ import halson from 'halson'
 module.exports = app => {
     const ROUTES = app.const.routes
     const UserHAL = (user) => {
-        return halson(user).addLink('self',ROUTES.USER.replace(":id",user.id))
+        const u = {
+            ...user.dataValues,
+            UserType: {
+                ...user.UserType.dataValues
+            }
+        }        
+        return  halson(u).addLink('self',ROUTES.USER.replace(":id",user.id))
     } 
     
     const UsersHAL = (users) => {
@@ -15,11 +21,11 @@ module.exports = app => {
         return halson({message: "Welcome"}).addLink("movies",ROUTES.MOVIES).addLink("profile",ROUTES.PROFILE)
     }
     
-    const SignUpHAL = () => {
+    const SignUpHAL = (cognitoUser) => {
         return halson({
             message: 'Welcome',
             user: cognitoUser,
-            status: 'CONFIRMED'
+            status: 'NOT_CONFIRMED'
           }).addLink("confirm",ROUTES.CONFIRM).addLink("logIn",ROUTES.LOG_IN)
     }
 

@@ -17,12 +17,13 @@ module.exports = app => {
   app.use(express.json());
 
   app.use(function (req, res, next) {
-    console.log(`Time:  ${Date.now()} Request: ${req.originalUrl}`);
+    console.log(`Time:  ${Date.now()} Request: ${req.originalUrl} Method: ${req. method}`);
     next();
   });
   const config = app.libs.config
   const protectedRoutes = express.Router(); 
   const User = app.db.models.User;   
+  const UserType = app.db.models.UserType;   
   protectedRoutes.use((req, res, next) => {
     const poolData = {
       UserPoolId: config.pool_id,
@@ -65,7 +66,7 @@ module.exports = app => {
                         } else {                            
 
                             try {
-                                req.User  = await User.findOne({ where: {id: decodedJwt.payload.sub}})
+                                req.User  = await User.findOne({ where: {id: decodedJwt.payload.sub}, include:[UserType]})                                
                                 if (!req.User) {
                                     throw "User not found"
                                 }

@@ -2,9 +2,8 @@ module.exports = (sequelize, DataType) => {
 
     const UserType = sequelize.define('UserType', {
       id: {
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        type: DataType.UUID,
+        primaryKey: true
       },
       name: {
         type: DataType.STRING,
@@ -30,7 +29,7 @@ module.exports = (sequelize, DataType) => {
     });
   
     UserType.associate = (models) => {
-      UserType.belongsTo(models.User)      
+      UserType.hasMany(models.User)      
     };
   
     return UserType;

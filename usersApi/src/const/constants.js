@@ -1,3 +1,4 @@
 module.exports = {
-    ADMIN_CODE: "admin"
+    ADMIN_CODE: "admin",
+    USER_CODE: "user"
 }

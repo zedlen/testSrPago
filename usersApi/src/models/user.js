@@ -26,32 +26,11 @@ module.exports = (sequelize, DataType) => {
       validate: {
         notEmpty: true
       }
-    }, 
-    lastname: {
-        type: DataType.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
     },
-    birthdate: {
-        type: DataType.DATEONLY,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
-    },   
-    gender: {
-        type: DataType.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
-    },   
   });
   
   User.associate = (models) => {    
-    User.hasOne(models.UserType)
+    User.belongsTo(models.UserType)
   };
 
   return User;

@@ -3,15 +3,16 @@ import halson from 'halson'
 module.exports = app => {
 
   const User = app.db.models.User;  
+  const UserType = app.db.models.UserType;  
   const AuthService = app.libs.auth_service
   const HAL = app.libs.hal
   const Router = app.routing
   const ROUTES = app.const.routes
   Router.route(ROUTES.USERS).get( app.get('protectedRoutes'), (req, res) => {    
-    if (req.User.UserType?.code === app.const.constants) {
+    if (req.User.UserType?.code === app.const.constants.ADMIN_CODE) {
       User.findAll({})
       .then(result => {        
-        res.json(HAL.UsersHal(result))
+        res.json(HAL.UsersHAL(result))
       })
       .catch(error => {
         res.status(500).json({error: error.message});
@@ -22,17 +23,17 @@ module.exports = app => {
   });
 
   Router.route(ROUTES.USER).get( app.get('protectedRoutes'), (req, res) => {
-    if (req.User.UserType?.code === app.const.constants || req.User.id === req.params.id) {
+    if (req.User.UserType?.code === app.const.constants.ADMIN_CODE || req.User.id === req.params.id) {
       User.findOne({
         where:{
           id: req.params.id
         },
-        attributes: ['id', 'name', 'email'],      
+        include:[UserType]
       })
-      .then(result => {      
-        if (result !== null) {
-          res.json(HAL.UserHal(result))                 
-        } else {
+      .then(result => {                
+        if (result != null) {          
+          res.json(HAL.UserHAL(result))                 
+        } else {          
           res.status(404).json({error: 'User not found'})
         }       
       })
@@ -46,7 +47,7 @@ module.exports = app => {
   
 
   Router.route(ROUTES.USER).delete( app.get('protectedRoutes'), (req, res) => {
-    if (req.User.UserType?.code === app.const.constants || req.User.id === req.params.id) {
+    if (req.User.UserType?.code === app.const.constants.ADMIN_CODE || req.User.id === req.params.id) {
       User.destroy({where: {id: req.params.id}})
         .then(result => res.sendStatus(204))
         .catch(error => {
@@ -61,11 +62,11 @@ module.exports = app => {
     const isFacebookAuth = req.body.is_facebook || false
     const isGoogleAuth = req.body.is_google || false
     const userAuthData = {
-      username: req.body.email,
-      // email: req.body.email,
+      username: req.body.username,
+      email: req.body.email,
       password: req.body.password, 
       // birthdate: req.body.birthdate,
-      // name: req.body.name,
+      name: req.body.name,
       // last_name: req.body.last_name,
       // gender: req.body.gender,
     }
@@ -77,10 +78,11 @@ module.exports = app => {
           // TODO: Implement Social Login
         } else {
           const loginResponse = (err, cognitoUser) =>{
-            if (err) {          
+            if (err) {  
+              console.log(err)        
               res.status(400).json({error: err});
             } else {          
-              res.status(201).json(HAL.SignUpHAL());
+              res.status(201).json(HAL.SignUpHAL(cognitoUser));
             }        
           }
           AuthService.Register(userAuthData, loginResponse)   
@@ -103,7 +105,7 @@ module.exports = app => {
         if (err) {          
           res.status(400).json({error: err});
         } else {          
-          res.json();
+          res.json({status: "CONFIRMED"});
         }        
       }
       AuthService.ConfirmRegister(userAuthData, confirmationResponse)
@@ -113,12 +115,13 @@ module.exports = app => {
     } 
   });
 
-  Router.route(ROUTES.PROFILE).get( app.get('protectedRoutes'), (req, res) => {   
+  Router.route(ROUTES.PROFILE).get( app.get('protectedRoutes'), (req, res) => {  
+    console.log(req.User)    
     res.status(200).json(req.User)    
   });
 
   Router.route(ROUTES.USER).put( app.get('protectedRoutes'), (req, res) => {
-    if (req.User.UserType?.code === app.const.constants || req.User.id === req.params.id) {
+    if (req.User.UserType?.code === app.const.constants.ADMIN_CODE || req.User.id === req.params.id) {
       User.findOne({where: {id: req.params.id}})
         .then(user => {
           if(user !== null){          
