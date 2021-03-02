@@ -80,11 +80,45 @@ Resources:
           ContainerPort: !Ref Port
           TargetGroupArn: !Ref TargetGroup
 
+  TaskExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${Name}-execution-role'
+      AssumeRolePolicyDocument: |
+        {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        }
+      Policies: 
+        - 
+          PolicyName: !Sub '${Name}-execution-policy'
+          PolicyDocument: 
+            Statement: 
+              - 
+                Effect: "Allow"
+                Action:
+                  - "ecr:GetAuthorizationToken"
+                  - "ecr:BatchCheckLayerAvailability"
+                  - "ecr:GetDownloadUrlForLayer"
+                  - "ecr:BatchGetImage"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+
+
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: product-service
       NetworkMode: awsvpc
+      ExecutionRoleArn: !Ref TaskExecutionRole
       RequiresCompatibilities:
         - 'FARGATE'
       ContainerDefinitions:
