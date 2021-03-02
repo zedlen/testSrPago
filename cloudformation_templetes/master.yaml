@@ -66,7 +66,7 @@ Resources:
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         InstanceType: t2.large
-        ClusterSize: 4
+        ClusterSize: 1
         VPC: !GetAtt VPC.Outputs.VPC
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
@@ -88,6 +88,7 @@ Resources:
         Cpu: 256
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
+        Priority: 10
 
   MoviesService:
     Type: AWS::CloudFormation::Stack
@@ -106,6 +107,7 @@ Resources:
         Cpu: 256
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
+        Priority: 20
   
   SalesService:
     Type: AWS::CloudFormation::Stack
@@ -124,6 +126,7 @@ Resources:
         Cpu: 256
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
+        Priority: 30
 
 
   

@@ -54,6 +54,11 @@ Parameters:
     Type: String
     Default: null
 
+  Priority:
+    Description: The Priority for the ALB
+    Type: Number
+    Default: 256
+
 Resources:
   Service:
     Type: AWS::ECS::Service
@@ -63,6 +68,10 @@ Resources:
       Role: !Ref ServiceRole
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
       LoadBalancers:
         - ContainerName: "product-service"
           ContainerPort: !Ref Port
@@ -123,7 +132,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn: !Ref Listener
-      Priority: 2
+      Priority: !Ref Priority
       Conditions:
         - Field: path-pattern
           Values:

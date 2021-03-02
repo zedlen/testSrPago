@@ -7,75 +7,15 @@ Parameters:
     Description: An environment name that will be prefixed to resource names
     Type: String
 
-  InstanceType:
-    Description: Which instance type should we use to build the ECS cluster?
-    Type: String
-    Default: c4.large
-
-  ClusterSize:
-    Description: How many ECS hosts do you want to initially deploy?
-    Type: Number
-    Default: 1
-
-  VPC:
-    Description: Choose which VPC this ECS cluster should be deployed to
-    Type: AWS::EC2::VPC::Id
-
-  Subnets:
-    Description: Choose which subnets this ECS cluster should be deployed to
-    Type: List<AWS::EC2::Subnet::Id>
-
-  SecurityGroup:
-    Description: Select the Security Group to use for the ECS cluster hosts
-    Type: AWS::EC2::SecurityGroup::Id
-
-  ECSAMI:
-    Description: ECS-Optimized AMI ID
-    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-    Default: /aws/service/ecs/optimized-ami/amazon-linux/recommended/image_id
-
 Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Ref EnvironmentName
 
-  ECSAutoScalingGroup:
-    DependsOn: ECSCluster
-    Type: AWS::AutoScaling::AutoScalingGroup
-    Properties:
-      VPCZoneIdentifier: !Ref Subnets
-      LaunchConfigurationName: !Ref ECSLaunchConfiguration
-      MinSize: !Ref ClusterSize
-      MaxSize: !Ref ClusterSize
-      DesiredCapacity: !Ref ClusterSize
-      Tags:
-        - Key: Name
-          Value: !Sub ${EnvironmentName} ECS host
-          PropagateAtLaunch: true    
-    UpdatePolicy:
-      AutoScalingRollingUpdate:
-        MinInstancesInService: 1
-        MaxBatchSize: 1
-        PauseTime: PT15M
-        SuspendProcesses:
-          - HealthCheck
-          - ReplaceUnhealthy
-          - AZRebalance
-          - AlarmNotification
-          - ScheduledActions
-        WaitOnResourceSignals: true
 
 
 Outputs:
   Cluster:
     Description: A reference to the ECS cluster
     Value: !Ref ECSCluster
-
-  ECSServiceAutoScalingRole:
-    Description: A reference to ECS service auto scaling role
-    Value: !GetAtt ECSServiceAutoScalingRole.Arn
-
-  ECSAutoScalingGroupName:
-    Description: A reference to ECS AutoScaling Group Name
-    Value: !Ref ECSAutoScalingGroup
