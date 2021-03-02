@@ -48,11 +48,11 @@ Parameters:
   
   PoolId:    
     Type: String
-    Default: null
+    Default: poolid
 
   AppClientId:    
     Type: String
-    Default: null
+    Default: appClient
 
   Priority:
     Description: The Priority for the ALB
