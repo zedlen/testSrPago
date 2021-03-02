@@ -14,7 +14,7 @@ module.exports = app => {
   app.use(cors());
   app.use(express.json());
   app.use(function (req, res, next) {
-    console.log(`Time:  ${Date.now()} Request: ${req.originalUrl}`);
+    console.log(`Time:  ${Date.now()} Request: ${req.originalUrl} Method: ${req. method}`);
     next();
   });
   const config = app.libs.config
@@ -69,15 +69,20 @@ module.exports = app => {
                                         'Authorization': token
                                     }
                                  }, (error, response, body) => {
+                                     console.log(response.statusCode)
+                                     // console.log(body)
                                      if (error) {
-                                         throw error
+                                        res.status(500);
+                                        return res.send({error: "Error finding user"});
                                      }
-                                     if (response.statusCode != 200) {
-                                        throw response.statusCode
+                                     if (response.statusCode != 200) {                                                                                
+                                        res.status(404);
+                                        return res.send({error: "User not found"});
                                      }
-                                     req.User = body.user
+                                     req.User = body
                                      if (!req.User) {
-                                        throw "User not found"
+                                        res.status(404);
+                                        return res.send({error: "User not found"});
                                     }
                                     return next();                                    
                                  })                                                                  

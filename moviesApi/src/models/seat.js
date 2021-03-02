@@ -13,8 +13,7 @@ module.exports = (sequelize, DataType) => {
       }
     },
     column: {
-      type: DataType.INTEGER,
-      unique: true,
+      type: DataType.INTEGER,      
       allowNull: false,
       validate: {
         notEmpty: true

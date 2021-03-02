@@ -2,9 +2,8 @@ module.exports = (sequelize, DataType) => {
 
     const Movie = sequelize.define('Movie', {
       id: {
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        type: DataType.UUID,
+        primaryKey: true
       },
       name: {
         type: DataType.STRING,
@@ -14,7 +13,8 @@ module.exports = (sequelize, DataType) => {
         }
       },          
       code: {
-        type: DataType.STRING,        
+        type: DataType.STRING,  
+        unique: true,      
       },          
       gender: {
         type: DataType.STRING,        
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataType) => {
         type: DataType.INTEGER
       },
       start_time: {
-        type: DataType.DATE,        
+        type: DataType.STRING,        
       },  
       duration: {
         type: DataType.INTEGER,        

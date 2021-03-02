@@ -4,7 +4,7 @@ module.exports = app => {
     const ROUTES = app.const.routes
 
     const MovieHAL = (movie) => {
-        return halson(movie)
+        return halson(movie.dataValues)
           .addLink('self',{ 
             href: ROUTES.MOVIE.replace(':id', movie.id),            
           })
@@ -15,8 +15,7 @@ module.exports = app => {
 
     const MoviesHAL = (movies, location) => {
         
-        const moviesHal = movies.map(u=>MovieHAL(u))    
-        
+        const moviesHal = movies.map(u=>MovieHAL(u))            
         return halson({movies:moviesHal})
           .addLink('self',{ 
             href: ROUTES.MOVIES.replace('{location}', location),            
@@ -24,16 +23,16 @@ module.exports = app => {
     }
 
     const SeatHAL = (seat, movie) => {
-        return halson(seatl)
+        return halson(seat.dataValues)
           .addLink('self',{ 
             href: ROUTES.SEAT.replace(':id:movie', movie.id).replace(':id', seat.id),
           })
           .addEmbed('movie', MovieHAL(movie))
     }
 
-    const SeatsHAL = (movies, movie) => {
+    const SeatsHAL = (seats, movie) => {
         
-        const seatsHal = movies.map(u=>SeatHAL(u))    
+        const seatsHal = seats.map(u=>SeatHAL(u, movie))    
         
         return halson({seats:seatsHal})
           .addLink('self',{ 
