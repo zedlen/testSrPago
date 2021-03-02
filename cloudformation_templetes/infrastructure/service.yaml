@@ -113,6 +113,7 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: !Ref Name
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
