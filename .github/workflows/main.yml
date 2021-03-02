@@ -74,7 +74,6 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: SrPagoStack
-          region: us-east-1
           template: cloudformation_templetes/master.yaml
           parameter-overrides: "UsersImage=${{ steps.users-ecr.outputs.imageUrl }},MoviesImage=${{ steps.movies-ecr.outputs.imageUrl }},SalesImage=${{ steps.sales-ecr.outputs.imageUrl }},BucketName=${{ secrets.AWS_BUCKET }}"
 

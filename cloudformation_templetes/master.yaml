@@ -65,11 +65,6 @@ Resources:
       TemplateURL: !Sub 'https://s3.amazonaws.com/${BucketName}/infrastructure/ecs-cluster.yaml'
       Parameters:
         EnvironmentName: !Ref AWS::StackName
-        InstanceType: t2.large
-        ClusterSize: 1
-        VPC: !GetAtt VPC.Outputs.VPC
-        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
-        Subnets: !GetAtt VPC.Outputs.PrivateSubnets
 
   UsersService:
     Type: AWS::CloudFormation::Stack

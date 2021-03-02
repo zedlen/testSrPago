@@ -15,8 +15,8 @@ module.exports = {
   username: process.env.DB_USERNAME || '',
   password: process.env.DB_PASSWORD || '',
   params: params,  
-  pool_id: process.env.POOL_ID || 'us-east-2_kLGSnsIEo',
-  app_client_id: process.env.APP_CLIENT_ID || '621an22fga1j936gtddkghe5re',
-  region: process.env.REGION || 'us-east-2',
+  pool_id: process.env.POOL_ID || 'us-east-1_LTscZeblD',
+  app_client_id: process.env.APP_CLIENT_ID || '4dica57860s1l1ue513u5k75ta',
+  region: process.env.REGION || 'us-east-1',
   users_url: process.env.USERS_URL || 'http://127.0.0.1:3001/users/api/v1',
 };

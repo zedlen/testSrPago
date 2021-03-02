@@ -33,16 +33,16 @@ module.exports = app => {
         
   });
 
-  Router.route(ROUTES.MOVIE).post(async (req, res) => {    
-    res.status(501).json({error: "Not Implrmrntrd"});
+  Router.route(ROUTES.MOVIES.split('?')[0]).post( app.get('protectedRoutes'), async (req, res) => {    
+    res.status(501).json({error: "Not Implemented"});
   });
 
   Router.route(ROUTES.MOVIE).delete(async (req, res) => {    
-    res.status(501).json({error: "Not Implrmrntrd"});
+    res.status(501).json({error: "Not Implemented"});
   });
 
   Router.route(ROUTES.MOVIE).patch(async (req, res) => {    
-    res.status(501).json({error: "Not Implrmrntrd"});
+    res.status(501).json({error: "Not Implemented"});
   });
 
   Router.route(ROUTES.SEATS).get(async (req, res) => {    
@@ -77,14 +77,14 @@ module.exports = app => {
   });
 
   Router.route(ROUTES.SEAT).post(async (req, res) => {    
-    res.status(501).json({error: "Not Implrmrntrd"});
+    res.status(501).json({error: "Not Implemented"});
   });
 
   Router.route(ROUTES.SEAT).delete(async (req, res) => {    
-    res.status(501).json({error: "Not Implrmrntrd"});
+    res.status(501).json({error: "Not Implemented"});
   });
 
   Router.route(ROUTES.SEAT).patch(async (req, res) => {    
-    res.status(501).json({error: "Not Implrmrntrd"});
+    res.status(501).json({error: "Not Implemented"});
   });
 };
