@@ -117,7 +117,7 @@ module.exports = app => {
                         if (seat.status === CONSTANTS.FREE_SEAT) {
                             seat.status = req.body.status
                             seat.save()
-                            res.status(200).json({message: "Seat reserved"});
+                            res.status(200).json({message: "Seat reserved", price: seat.price});
                         } else {
                             res.status(400).json({error: "Not a free seat"});
                         }
@@ -126,7 +126,7 @@ module.exports = app => {
                         if (seat.status === CONSTANTS.RESERVED_SEAT) {
                             seat.status = req.body.status
                             seat.save()
-                            res.status(200).json({message: "Seat Confirmed"});
+                            res.status(200).json({message: "Seat Confirmed", price: seat.price});
                         } else {
                             res.status(400).json({error: "Not a reserved seat"});
                         }
@@ -157,10 +157,12 @@ module.exports = app => {
                         } else {
                             res.status(400).json({error: "Seat is in use"});
                         }
-                    }                
+                    }                    
                 } else {
                 res.status(400).json({error: "Not a valid Status"});          
                 }
+            } else {
+                res.status(400).json({error: "Not status in body"});          
             }    
         } catch (error) {
             res.status(500).json({error: error});
