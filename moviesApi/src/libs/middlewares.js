@@ -13,6 +13,10 @@ module.exports = app => {
   // middlewares
   app.use(cors());
   app.use(express.json());
+  app.use(function (req, res, next) {
+    console.log(`Time:  ${Date.now()} Request: ${req.originalUrl}`);
+    next();
+  });
   const config = app.libs.config
   const ROUTES = app.const.routes
   const protectedRoutes = express.Router();   
