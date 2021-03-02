@@ -160,16 +160,21 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      VpcId: !Ref VPC
-      Port: 80
-      Protocol: HTTP
-      Matcher:
-        HttpCode: 200-299
-      HealthCheckIntervalSeconds: 10
-      HealthCheckPath: '/${Path}/alive'
+    Properties:
+      HealthCheckIntervalSeconds: 20
+      HealthCheckPath: !Sub '${Path}/alive'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 5
+      TargetType: ip
+      Name: !Sub '${Name}-cluster'
+      Port: 80
+      Protocol: HTTP
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: '20'
+      VpcId: !Ref VPC            
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
