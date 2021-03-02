@@ -72,16 +72,7 @@ Resources:
       LaunchType: FARGATE
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          SecurityGroups: 
-            - !Ref 'SecurityGroup'
-            - Fn::ImportValue:
-                !Sub "${ClusterName}-ServicesSecurityGroup"
-          Subnets:
-            Fn::Split:
-              - ","
-              - Fn::ImportValue:
-                  !Sub "${ClusterName}-PublicSubnets"
+          AssignPublicIp: ENABLED          
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
