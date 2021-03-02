@@ -78,13 +78,14 @@ Resources:
         Path: /users
         Image: !Ref UsersImage
         Port: 3001
-        Name: Movies
+        Name: Users
         Memory: 512
         Cpu: 256
         PoolId: !GetAtt CognitoPool.Outputs.IdentityPoolId
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
         Priority: 10
         Subnets: !GetAtt VPC.Outputs.PublicSubnets
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.LoadBalancerSecurityGroup
 
   MoviesService:
     Type: AWS::CloudFormation::Stack
@@ -105,6 +106,7 @@ Resources:
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
         Priority: 20
         Subnets: !GetAtt VPC.Outputs.PublicSubnets
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.LoadBalancerSecurityGroup
   
   SalesService:
     Type: AWS::CloudFormation::Stack
@@ -125,6 +127,7 @@ Resources:
         AppClientId: !GetAtt CognitoPool.Outputs.UserPoolClientId
         Priority: 30
         Subnets: !GetAtt VPC.Outputs.PublicSubnets
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.LoadBalancerSecurityGroup
 
 
   

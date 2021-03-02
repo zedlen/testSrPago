@@ -63,6 +63,11 @@ Parameters:
     Description: The subnets to deploy
     Type: String
     Default: private
+  
+  SecurityGroup:
+    Description: The security grouop ob te ELB to deploy
+    Type: String
+    Default: default
 
 Resources:
 
@@ -76,7 +81,9 @@ Resources:
       LaunchType: FARGATE
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: ENABLED          
+          AssignPublicIp: ENABLED  
+          SecurityGroups: 
+            - !Ref 'SecurityGroup'        
           Subnets:
             Fn::Split:
               - ","
